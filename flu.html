@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>How Humans Catch The Flu</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+        radial-gradient(circle at top,#27406b,#08101d 70%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+}
+
+/* Instagram 4:5 */
+
+.container{
+    position:relative;
+    width:min(90vw,700px);
+    aspect-ratio:4/5;
+    overflow:hidden;
+
+    border-radius:30px;
+
+    background:
+        radial-gradient(circle at 20% 20%,rgba(0,255,255,.15),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(255,0,128,.15),transparent 30%),
+        linear-gradient(180deg,#07111d,#11233f);
+
+    box-shadow:
+      0 0 50px rgba(0,255,255,.25);
+}
+
+.title{
+    position:absolute;
+    top:15px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:2rem;
+    font-weight:800;
+    text-shadow:0 0 15px cyan;
+}
+
+.human-container{
+    position:absolute;
+    left:50%;
+    top:95px;
+    transform:translateX(-50%);
+    width:260px;
+    height:420px;
+}
+
+svg{
+    width:100%;
+    height:100%;
+}
+
+.body-part{
+    fill:rgba(255,255,255,.04);
+    stroke:#86ffff;
+    stroke-width:3;
+}
+
+.limb{
+    stroke:#86ffff;
+    stroke-width:10;
+    stroke-linecap:round;
+}
+
+.airway{
+    fill:#80ffff;
+}
+
+.lung{
+    fill:#00d4ff;
+    opacity:.5;
+
+    filter:
+      drop-shadow(0 0 10px cyan)
+      drop-shadow(0 0 30px cyan);
+
+    animation:
+      breathing 3s ease-in-out infinite;
+}
+
+@keyframes breathing{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+.airway-path{
+    fill:none;
+    stroke:#82ffff;
+    stroke-width:4;
+    stroke-linecap:round;
+
+    filter:
+      drop-shadow(0 0 5px cyan)
+      drop-shadow(0 0 15px cyan);
+
+    stroke-dasharray:500;
+    stroke-dashoffset:500;
+
+    animation:airflow 5s linear infinite;
+}
+
+@keyframes airflow{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+.timeline{
+    position:absolute;
+    left:40px;
+    top:100px;
+    width:4px;
+    height:70%;
+    background:rgba(255,255,255,.2);
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    background:linear-gradient(
+        #00ffff,
+        #00ff95,
+        #ffe600,
+        #ff4d4d
+    );
+
+    animation:timelineFill 14s linear infinite;
+}
+
+@keyframes timelineFill{
+    from{height:0%;}
+    to{height:100%;}
+}
+
+.stage{
+    position:absolute;
+    left:55px;
+    width:200px;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(6px);
+
+    padding:10px;
+    border-radius:14px;
+
+    color:white;
+    font-size:12px;
+
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.stage h3{
+    color:#87ffff;
+    margin-bottom:4px;
+}
+
+.s1{top:120px;}
+.s2{top:210px;}
+.s3{top:300px;}
+.s4{top:390px;}
+.s5{top:480px;}
+
+#virusLayer{
+    position:absolute;
+    inset:0;
+}
+
+.virus{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+
+    background:#ff447a;
+
+    box-shadow:
+      0 0 5px #ff447a,
+      0 0 12px #ff447a,
+      0 0 24px #ff447a;
+}
+
+.infectionSpot{
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#ff4a4a;
+
+    box-shadow:
+      0 0 8px #ff4a4a,
+      0 0 18px #ff4a4a;
+
+    animation:spotGrow 10s forwards;
+}
+
+@keyframes spotGrow{
+
+    0%{
+        transform:scale(.3);
+        opacity:1;
+    }
+
+    100%{
+        transform:scale(3);
+        opacity:.1;
+    }
+}
+
+.footer{
+
+    position:absolute;
+    bottom:10px;
+    width:100%;
+    text-align:center;
+    color:#9ce7ff;
+    font-size:12px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="title">
+        🤧 How Humans Catch The Flu
+    </div>
+
+    <div class="timeline"></div>
+
+    <div class="stage s1">
+        <h3>1. Exposure</h3>
+        Virus droplets enter nearby air.
+    </div>
+
+    <div class="stage s2">
+        <h3>2. Inhalation</h3>
+        Droplets enter through nose and mouth.
+    </div>
+
+    <div class="stage s3">
+        <h3>3. Airway Entry</h3>
+        Particles move through the respiratory tract.
+    </div>
+
+    <div class="stage s4">
+        <h3>4. Lung Infection</h3>
+        Virus reaches bronchi and alveoli.
+    </div>
+
+    <div class="stage s5">
+        <h3>5. Symptoms</h3>
+        Infection spreads and symptoms develop.
+    </div>
+
+    <div class="human-container">
+
+        <svg viewBox="0 0 300 500">
+
+            <circle cx="150" cy="65" r="40" class="body-part"/>
+
+            <rect
+                x="115"
+                y="110"
+                width="70"
+                height="180"
+                rx="35"
+                class="body-part"/>
+
+            <line class="limb"
+                  x1="115" y1="150"
+                  x2="60" y2="250"/>
+
+            <line class="limb"
+                  x1="185" y1="150"
+                  x2="240" y2="250"/>
+
+            <line class="limb"
+                  x1="135" y1="290"
+                  x2="100" y2="430"/>
+
+            <line class="limb"
+                  x1="165" y1="290"
+                  x2="200" y2="430"/>
+
+            <rect
+                x="145"
+                y="100"
+                width="10"
+                height="45"
+                class="airway"/>
+
+            <!-- Lungs -->
+
+            <path
+                id="leftLung"
+                class="lung"
+                d="M145 140
+                   C95 140 78 195 78 250
+                   C78 320 115 340 145 340
+                   Z"/>
+
+            <path
+                id="rightLung"
+                class="lung"
+                d="M155 140
+                   C205 140 222 195 222 250
+                   C222 320 185 340 155 340
+                   Z"/>
+
+            <!-- Bronchi -->
+
+            <g>
+
+                <path class="airway-path"
+                      d="M150 100 L150 170"/>
+
+                <path class="airway-path"
+                      d="M150 170 L120 220"/>
+
+                <path class="airway-path"
+                      d="M150 170 L180 220"/>
+
+                <path class="airway-path"
+                      d="M120 220 L95 270"/>
+
+                <path class="airway-path"
+                      d="M120 220 L135 290"/>
+
+                <path class="airway-path"
+                      d="M95 270 L80 320"/>
+
+                <path class="airway-path"
+                      d="M95 270 L110 330"/>
+
+                <path class="airway-path"
+                      d="M135 290 L130 340"/>
+
+                <path class="airway-path"
+                      d="M135 290 L145 340"/>
+
+                <path class="airway-path"
+                      d="M180 220 L205 270"/>
+
+                <path class="airway-path"
+                      d="M180 220 L165 290"/>
+
+                <path class="airway-path"
+                      d="M205 270 L220 320"/>
+
+                <path class="airway-path"
+                      d="M205 270 L190 330"/>
+
+                <path class="airway-path"
+                      d="M165 290 L155 340"/>
+
+                <path class="airway-path"
+                      d="M165 290 L175 340"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+    <div id="virusLayer"></div>
+
+    <div class="footer">
+        Respiratory Infection Process Visualization
+    </div>
+
+</div>
+
+<script>
+
+const layer =
+    document.getElementById("virusLayer");
+
+const leftLung =
+    document.getElementById("leftLung");
+
+const rightLung =
+    document.getElementById("rightLung");
+
+let infection = 0;
+
+/* SVG path network */
+
+const network = [
+ {x1:350,y1:185,x2:350,y2:255},
+ {x1:350,y1:255,x2:315,y2:320},
+ {x1:350,y1:255,x2:385,y2:320},
+ {x1:315,y1:320,x2:285,y2:390},
+ {x1:315,y1:320,x2:330,y2:410},
+ {x1:385,y1:320,x2:420,y2:390},
+ {x1:385,y1:320,x2:370,y2:410}
+];
+
+function infectLungs(){
+
+    infection += 0.01;
+
+    let r = Math.min(255,30 + infection*280);
+    let g = Math.max(50,220 - infection*180);
+    let b = Math.max(80,255 - infection*170);
+
+    let color =
+       `rgb(${r},${g},${b})`;
+
+    leftLung.style.fill = color;
+    rightLung.style.fill = color;
+}
+
+function spot(x,y){
+
+    const s =
+        document.createElement("div");
+
+    s.className="infectionSpot";
+
+    s.style.left=x+"px";
+    s.style.top=y+"px";
+
+    layer.appendChild(s);
+
+    infectLungs();
+
+    setTimeout(()=>{
+        s.remove();
+    },10000);
+}
+
+function branch(x,y){
+
+    const children =
+        2 + Math.floor(Math.random()*3);
+
+    for(let i=0;i<children;i++){
+
+        const v =
+            document.createElement("div");
+
+        v.className="virus";
+        layer.appendChild(v);
+
+        let angle =
+            Math.random() * Math.PI * 2;
+
+        let distance =
+            20 + Math.random()*50;
+
+        let targetX =
+            x + Math.cos(angle)*distance;
+
+        let targetY =
+            y + Math.sin(angle)*distance;
+
+        v.animate([
+            {
+                left:x+"px",
+                top:y+"px"
+            },
+            {
+                left:targetX+"px",
+                top:targetY+"px"
+            }
+        ],{
+           duration:1000,
+           fill:"forwards"
+        });
+
+        setTimeout(()=>{
+            spot(targetX,targetY);
+            v.remove();
+        },1000);
+    }
+}
+
+function launchVirus(){
+
+    const v =
+        document.createElement("div");
+
+    v.className="virus";
+
+    layer.appendChild(v);
+
+    let x = 30;
+    let y = 200 + Math.random()*40;
+
+    let targetX = 350;
+    let targetY = 185;
+
+    let p = 0;
+
+    function frame(){
+
+        p += .02;
+
+        let cx =
+          x+(targetX-x)*p;
+
+        let cy =
+          y+(targetY-y)*p;
+
+        v.style.left =
+          cx+"px";
+
+        v.style.top =
+          cy+"px";
+
+        if(p < 1){
+
+            requestAnimationFrame(frame);
+
+        }else{
+
+            routeBronchi(v);
+        }
+    }
+
+    frame();
+}
+
+function routeBronchi(original){
+
+    original.remove();
+
+    network.forEach((seg,index)=>{
+
+        setTimeout(()=>{
+
+            const v =
+             document.createElement("div");
+
+            v.className="virus";
+
+            layer.appendChild(v);
+
+            let p = 0;
+
+            function animate(){
+
+                p += .03;
+
+                let x =
+                  seg.x1 +
+                  (seg.x2-seg.x1)*p;
+
+                let y =
+                  seg.y1 +
+                  (seg.y2-seg.y1)*p;
+
+                v.style.left=x+"px";
+                v.style.top=y+"px";
+
+                if(p<1){
+
+                    requestAnimationFrame(
+                        animate
+                    );
+
+                }else{
+
+                    if(index > 2){
+                        branch(x,y);
+                    }
+
+                    v.remove();
+                }
+            }
+
+            animate();
+
+        },index*120);
+    });
+}
+
+setInterval(
+  launchVirus,
+  700
+);
+
+</script>
+
+</body>
+</html>
